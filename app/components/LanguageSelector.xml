@@ -1,0 +1,12 @@
+<GridLayout columns="*, *" class="mb-4">
+    <StackLayout col="0" class="mr-2">
+        <Label text="From:" class="text-sm text-gray-600" />
+        <Button text="{{ fromLanguage }}" tap="{{ selectFromLanguage }}" 
+                class="bg-white text-blue-600 rounded-lg p-2" />
+    </StackLayout>
+    <StackLayout col="1" class="ml-2">
+        <Label text="To:" class="text-sm text-gray-600" />
+        <Button text="{{ toLanguage }}" tap="{{ selectToLanguage }}" 
+                class="bg-white text-blue-600 rounded-lg p-2" />
+    </StackLayout>
+</GridLayout>

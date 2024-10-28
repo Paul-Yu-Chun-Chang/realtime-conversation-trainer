@@ -1,0 +1,24 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
+    <ActionBar title="Language Learner" class="bg-blue-600 text-white" />
+    <GridLayout rows="auto, *, auto" class="p-4">
+        <!-- Header -->
+        <StackLayout row="0" class="mb-4">
+            <Label text="Language Learner" class="text-2xl font-bold text-center" />
+            <Label text="Start speaking to begin" class="text-lg text-center text-gray-500" />
+        </StackLayout>
+
+        <!-- Main Content -->
+        <StackLayout row="1" class="m-2">
+            <Label text="{{ currentText }}" class="text-lg text-center p-2" textWrap="true" />
+            <Label text="{{ translatedText }}" class="text-lg text-blue-600 text-center p-2" textWrap="true" />
+            <Label text="{{ suggestion }}" class="text-lg text-green-600 text-center p-2" textWrap="true" />
+        </StackLayout>
+
+        <!-- Controls -->
+        <StackLayout row="2" class="m-2">
+            <Button text="Start Recording" 
+                    tap="{{ toggleListening }}" 
+                    class="bg-blue-500 text-white p-4 rounded-lg" />
+        </StackLayout>
+    </GridLayout>
+</Page>

@@ -1,0 +1,7 @@
+{
+  "installDependencies": true,
+  "startCommand": "setup-nativescript-stackblitz && ns preview",
+  "env": {
+    "NODE_VERSION": "16"
+  }
+}

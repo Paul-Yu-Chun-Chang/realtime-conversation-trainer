@@ -1,0 +1,7 @@
+<GridLayout columns="*, *" class="mt-4">
+    <Button col="0" text="{{ isListening ? 'Stop' : 'Start' }}" 
+            tap="{{ toggleListening }}" 
+            class="{{ isListening ? 'bg-red-500' : 'bg-blue-500' }} text-white rounded-lg m-2" />
+    <Button col="1" text="Camera" tap="{{ toggleCamera }}" 
+            class="bg-gray-500 text-white rounded-lg m-2" />
+</GridLayout>
