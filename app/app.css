@@ -1,3 +1,69 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.action-bar {
+    background-color: #4f46e5;
+    color: white;
+}
+
+Page {
+    background-color: #f9fafb;
+}
+
+.start-button {
+    background-color: rgba(0, 0, 32, 0.9);
+    color: white;
+    font-size: 16;
+    font-weight: 600;
+    padding: 16;
+    border-radius: 12;
+}
+
+.stop-button {
+    background-color: #ef4444;
+    color: white;
+    font-size: 16;
+    font-weight: 600;
+    padding: 16;
+    border-radius: 12;
+}
+
+.language-button {
+    background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+    color: #374151;
+    font-size: 16;
+    font-weight: 500;
+    padding: 12 16;
+    border-radius: 10;
+    border-width: 1;
+    border-color: #e5e7eb;
+    shadow-color: #000;
+    shadow-offset: 0 2;
+    shadow-opacity: 0.05;
+    shadow-radius: 4;
+    height: 45;
+}
+
+.language-button:highlighted {
+    background: linear-gradient(to bottom, #f3f4f6, #e5e7eb);
+    transform: scale(0.98);
+}
+
+.arrow-label {
+    color: #6b7280;
+    font-size: 20;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    margin: 20 4 0 4;
+}
+
+.language-label {
+    color: #4b5563;
+    font-size: 13;
+    font-weight: 600;
+    margin-bottom: 4;
+    text-transform: uppercase;
+    letter-spacing: 0.5;
+}

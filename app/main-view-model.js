@@ -1,63 +1,108 @@
 import { Observable } from '@nativescript/core';
+import { Dialogs } from '@nativescript/core';
 
 export function createViewModel() {
     const viewModel = new Observable();
-    
+
+    // Available languages
+    const languages = [
+        "English",
+        "Spanish",
+        "French",
+        "German",
+        "Italian",
+        "Portuguese",
+        "Dutch",
+        "Russian",
+        "Chinese (Mandarin)",
+        "Polish",
+        "Swedish",
+        "Norwegian"
+    ];
+
     // Initialize properties
-    viewModel.isListening = false;
-    viewModel.currentText = "Waiting to start...";
-    viewModel.translatedText = "";
-    viewModel.suggestion = "";
-    
+    viewModel.set("isListening", false);
+    viewModel.set("currentTranscript", "Tap 'Start Conversation' to begin...");
+    viewModel.set("fromLanguage", "German");
+    viewModel.set("toLanguage", "German");
+    viewModel.set("suggestions", []);
+
+    // Language selection dialogs
+    viewModel.showFromLanguageDialog = () => {
+        Dialogs.action({
+            message: "Select source language",
+            cancelButtonText: "Cancel",
+            actions: languages
+        }).then(result => {
+            if (result !== "Cancel") {
+                viewModel.set("fromLanguage", result);
+                updateSuggestions();
+            }
+        });
+    };
+
+    viewModel.showToLanguageDialog = () => {
+        Dialogs.action({
+            message: "Select target language",
+            cancelButtonText: "Cancel",
+            actions: languages
+        }).then(result => {
+            if (result !== "Cancel") {
+                viewModel.set("toLanguage", result);
+                updateSuggestions();
+            }
+        });
+    };
+
     // Toggle listening state
     viewModel.toggleListening = () => {
-        viewModel.set("isListening", !viewModel.isListening);
+        viewModel.set("isListening", !viewModel.get("isListening"));
         
-        if (viewModel.isListening) {
-            viewModel.set("currentText", "Listening...");
-            simulateConversation(viewModel);
+        if (viewModel.get("isListening")) {
+            viewModel.set("currentTranscript", "Listening...");
+            simulateConversation();
         } else {
-            viewModel.set("currentText", "Stopped listening");
-            viewModel.set("translatedText", "");
-            viewModel.set("suggestion", "");
-        }
-
-        // Update button text
-        const button = viewModel.page.getViewById("recordButton");
-        if (button) {
-            button.text = viewModel.isListening ? "Stop Recording" : "Start Recording";
+            viewModel.set("currentTranscript", "Conversation stopped");
+            viewModel.set("suggestions", []);
         }
     };
 
+    // Simulate conversation for demo
+    function simulateConversation() {
+        if (!viewModel.get("isListening")) return;
+
+        const conversations = [
+            "Hello, how are you today?",
+            "I'm looking for directions to the museum.",
+            "Could you recommend a good restaurant?",
+            "What time does the train leave?"
+        ];
+
+        let index = 0;
+        const interval = setInterval(() => {
+            if (!viewModel.get("isListening")) {
+                clearInterval(interval);
+                return;
+            }
+
+            viewModel.set("currentTranscript", conversations[index]);
+            updateSuggestions();
+
+            index = (index + 1) % conversations.length;
+        }, 3000);
+    }
+
+    // Update suggestions based on current transcript
+    function updateSuggestions() {
+        const suggestions = [
+            "I'm doing well, thank you. How are you?",
+            "The museum is two blocks away, on the right.",
+            "I'd recommend trying the local cuisine.",
+            "Let me check the schedule for you."
+        ];
+
+        viewModel.set("suggestions", suggestions);
+    }
+
     return viewModel;
-}
-
-function simulateConversation(viewModel) {
-    if (!viewModel.isListening) return;
-
-    const phrases = [
-        "Hello, how are you?",
-        "What's the weather like?",
-        "Nice to meet you!"
-    ];
-
-    const translations = [
-        "¡Hola, ¿cómo estás?",
-        "¿Qué tiempo hace?",
-        "¡Encantado de conocerte!"
-    ];
-
-    let index = 0;
-    const interval = setInterval(() => {
-        if (!viewModel.isListening) {
-            clearInterval(interval);
-            return;
-        }
-
-        viewModel.set("currentText", phrases[index]);
-        viewModel.set("translatedText", translations[index]);
-        viewModel.set("suggestion", "Try responding naturally!");
-
-        index = (index + 1) % phrases.length;
-    }, 3000);
 }
