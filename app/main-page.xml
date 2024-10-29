@@ -1,24 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="onNavigatingTo">
-    <ActionBar title="Language Learner" class="bg-blue-600 text-white" />
-    <GridLayout rows="auto, *, auto" class="p-4">
-        <!-- Header -->
-        <StackLayout row="0" class="mb-4">
-            <Label text="Language Learner" class="text-2xl font-bold text-center" />
-            <Label text="Start speaking to begin" class="text-lg text-center text-gray-500" />
-        </StackLayout>
+    <ActionBar title="Conversation Trainer" class="bg-indigo-600 text-white" flat="true" />
+    
+    <GridLayout rows="*, auto, *, auto" class="bg-gray-50 p-4">
+        <!-- Speech Transcript Panel -->
+        <GridLayout row="0" class="bg-white rounded-xl shadow-sm p-4 m-2">
+            <ScrollView>
+                <StackLayout>
+                    <Label text="Speech Transcript" class="text-lg font-semibold text-gray-700 mb-2" />
+                    <Label text="{{ currentTranscript }}" textWrap="true" class="text-gray-600" />
+                </StackLayout>
+            </ScrollView>
+        </GridLayout>
 
-        <!-- Main Content -->
-        <StackLayout row="1" class="m-2">
-            <Label text="{{ currentText }}" class="text-lg text-center p-2" textWrap="true" />
-            <Label text="{{ translatedText }}" class="text-lg text-blue-600 text-center p-2" textWrap="true" />
-            <Label text="{{ suggestion }}" class="text-lg text-green-600 text-center p-2" textWrap="true" />
-        </StackLayout>
+        <!-- Language Selector -->
+        <GridLayout row="1" columns="*, auto, *" class="my-4">
+            <GridLayout col="0" rows="auto, auto" class="mx-2">
+                <Label row="0" text="FROM" class="language-label" />
+                <Button row="1" text="{{ fromLanguage }}" 
+                        tap="{{ showFromLanguageDialog }}" 
+                        class="language-button" />
+            </GridLayout>
+            
+            <GridLayout col="1" verticalAlignment="middle">
+                <Label text="↔" class="arrow-label" />
+            </GridLayout>
+            
+            <GridLayout col="2" rows="auto, auto" class="mx-2">
+                <Label row="0" text="TO" class="language-label" />
+                <Button row="1" text="{{ toLanguage }}" 
+                        tap="{{ showToLanguageDialog }}" 
+                        class="language-button" />
+            </GridLayout>
+        </GridLayout>
 
-        <!-- Controls -->
-        <StackLayout row="2" class="m-2">
-            <Button text="Start Recording" 
-                    tap="{{ toggleListening }}" 
-                    class="bg-blue-500 text-white p-4 rounded-lg" />
-        </StackLayout>
+        <!-- Suggestions Panel -->
+        <GridLayout row="2" class="bg-white rounded-xl shadow-sm p-4 m-2">
+            <ScrollView>
+                <StackLayout>
+                    <Label text="Suggestions" class="text-lg font-semibold text-gray-700 mb-2" />
+                    <Repeater items="{{ suggestions }}">
+                        <Repeater.itemTemplate>
+                            <Label text="{{ $value }}" textWrap="true" 
+                                   class="text-gray-600 bg-gray-50 p-3 rounded-lg mb-2" />
+                        </Repeater.itemTemplate>
+                    </Repeater>
+                </StackLayout>
+            </ScrollView>
+        </GridLayout>
+
+        <!-- Control Button -->
+        <Button row="3" 
+                text="{{ isListening ? 'Stop Conversation' : 'Start Conversation' }}" 
+                tap="{{ toggleListening }}" 
+                class="{{ isListening ? 'stop-button' : 'start-button' }}" 
+                verticalAlignment="middle" 
+                margin="8,16" />
     </GridLayout>
 </Page>
